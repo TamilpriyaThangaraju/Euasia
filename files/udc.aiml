@@ -1,9 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml version="2.0">
+  
+    <!--SAY HI TO EUASIA-->
+    <category>
+        <pattern>What is your name</pattern>
+        <template>
+            <random>
+                <li>Hi. My name is Euasia.</li>
+                <li>Hello! I'm Euasia</li>
+            </random>
+        </template>
+      </category>
+      
+    <category>
+          <pattern>Hi</pattern>
+          <template>
+              <srai>What is your name</srai>
+          </template>
+    </category>    
+
+    <!--DISEASE AND DIAGNOSIS-->
+    <category>
+        <pattern>* disease</pattern>
+        <template>How many months has passed after <set name="disease"><star/></set> diagnosis?</template>
+    </category>
+      
+    <category>
+        <pattern>* months</pattern>
+        <template>On an average, 
+            <get name="disease"/> patients survive for <bot name="alzspn"/>. 
+            Want to examine with the <set name="topic">Four</set> Quadrant Approach?
+        </template>
+    </category>
     
-  <category>
-    <pattern>What is your name</pattern>
-    <template>My name is Euasia</template>
-  </category>
- 
+    
+    <!--QUADRANT-1 MEDICAL INDICATIONS-->
+    <topic name="Four">
+        <category>
+            <pattern>YES</pattern>
+            <template>Is the patient capable of <set name="topic">undertaking</set> <bot name="alzmed"/>?</template>
+        </category>
+    </topic>
+    
+    
+    <!--QUADRANT-2 PATIENT PREFERENCES-->
+    <topic name="undertaking">
+        <category>
+            <pattern>yes</pattern>
+            <that>Is the patient capable of *</that>
+            <template>
+                Whether the conscious patient or his closest alive relation have given the <set name="topic">consent</set> to euthanise?<think><set name="q1res">Quadrant-1(Medical Indications) Failed.</set></think>
+            </template>
+        </category>
+        
+        <category>
+            <pattern>no</pattern>
+            <that>Is the patient capable of *</that>
+            <template>
+                Whether the conscious patient or his closest alive relation have given the <set name="topic">consent</set> to euthanise?<think><set name="q1res">Quadrant-1(Medical Indications) Passed.</set></think>
+            </template>
+        </category>
+    </topic>
+    
+    <!--QUADRANT-3 QUALITY OF LIFE-->
+    <topic name="consent">
+        <category>
+            <pattern>*</pattern>
+            <template>
+                <think><set name="q2"><star/></set></think>
+                <condition name="q2">
+                    <li value="yes">Is the patient <set name="topic">dependent</set> on others even for basic needs? <think><set name="q2res">Quadrant-2(Patient Preferences) Passed.</set></think></li>
+                    <li value="no">Is the patient <set name="topic">dependent</set> on others even for basic needs? <think><set name="q2res">Quadrant-2(Patient Preferences) Failed.</set></think></li>
+                </condition>
+            </template>
+        </category>
+    </topic>
+    
+    <!--QUADRANT-4 CONTEXTUAL FEATURES(FINANCE)-->
+    <topic name="dependent">
+        <category>
+            <pattern>*</pattern>
+            <template>
+                <think><set name="q3"><star/></set></think>
+                <condition name="q3">
+                    <li value="yes">Is the patient <set name="topic">financially</set> sound?<think><set name="q3res">Quadrant-3(Quality of Life) Passed.</set></think></li>
+                    <li value="no">Is the patient <set name="topic">financially</set> sound?<think><set name="q3res">Quadrant-3(Quality of Life) Failed.</set></think></li>
+                </condition>
+                </template>
+        </category>
+    </topic>
+    
+    <!--QUADRANT-4 CONTEXTUAL FEATURES(RELIGION)-->
+    <topic name="financially">
+        <category>
+            <pattern>*</pattern>
+            <template>
+                <think><set name="q41"><star/></set></think>
+                <condition name="q41">
+                    <li value="no">Does the patient's <set name="topic">religion</set> support euthanasia? <think><set name="q41res">Quadrant-4(Contextual Features-Finance) Passed.</set></think></li>
+                    <li value="yes">What is the patient's <set name="topic">religion</set> support euthanasia? <think><set name="q41res">Quadrant-4(Contextual Features-Finance) Failed.</set></think></li>
+                </condition>
+                </template>
+        </category>
+    </topic>
+    
+    <!--QUADRANT-4 CONTEXTUAL FEATURES(COUNTRY)-->
+    <topic name="religion">
+        <category>
+            <pattern>*</pattern>
+            <template>
+                <think><set name="q42"><star/></set></think>
+                <condition name="q42">
+                    <li value="yes">Is Euthanasia legal in the patient's <set name="topic">country</set>? <think><set name="q42res">Quadrant-4(Contextual Features-Religion) Passed.</set></think></li>
+                    <li value="no">Is Euthanasia legal in the patient's <set name="topic">country</set>? <think><set name="q42res">Quadrant-4(Contextual Features-Religion) Failed.</set></think></li>
+                </condition>
+                </template>
+        </category>
+    </topic>
+    
+    <!--FOUR QUADRANT OUTPUT-->
+    <topic name="country">
+        <category>
+            <pattern>*</pattern>
+            <template>
+                <think><set name="q43"><star/></set></think>
+                <condition name="q43">
+                    <li value="yes">Need euasia's <set name="topic">decision</set>? <think><set name="q43res">Quadrant-4(Contextual Features-Country) Passed.</set></think></li>
+                    <li value="no">Need euasia's <set name="topic">decision</set>? <think><set name="q43res">Quadrant-4(Contextual Features-Country) Failed.</set></think></li>
+                </condition>
+                </template>
+        </category>
+    </topic>
+    
+    
+    <topic name="decision">
+        <category>
+            <pattern>*</pattern>
+            <template>
+                <get name="q1res"/><br/>
+                <get name="q2res"/><br/>
+                <get name="q3res"/><br/> 
+                <get name="q41res"/><br/>
+                <get name="q42res"/><br/>
+                <get name="q43res"/><br/>
+            </template>
+        </category>
+    </topic>
+    
 </aiml>

@@ -27,7 +27,7 @@
       
     <category>
         <pattern>* months</pattern>
-        <template>On an average, 
+        <template>On average, 
             <get name="disease"/> patients survive for <bot name="alzspn"/>. 
             Want to examine with the <set name="topic">Four</set> Quadrant Approach?
         </template>
@@ -137,11 +137,11 @@
         <category>
             <pattern>*</pattern>
             <template>
-                <get name="q1res"/><br/>
-                <get name="q2res"/><br/>
-                <get name="q3res"/><br/> 
-                <get name="q41res"/><br/>
-                <get name="q42res"/><br/>
+                <get name="q1res"/><br/><br/>
+                <get name="q2res"/><br/><br/>
+                <get name="q3res"/><br/> <br/>
+                <get name="q41res"/><br/><br/>
+                <get name="q42res"/><br/><br/>
                 <get name="q43res"/><br/>
             </template>
         </category>
